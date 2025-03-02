@@ -8,7 +8,6 @@
           <include name="testSuccessfulSignUp"/>
           <include name="setUp"/>
           <include name="tearDown"/>
-          <include name="testEmailValidations" invocation-numbers="0 1 2"/>
         </methods>
       </class> <!-- testcases.SignUpTest -->
     </classes>

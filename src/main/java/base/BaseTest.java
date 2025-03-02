@@ -10,20 +10,27 @@ import java.time.Duration;
 
 public class BaseTest {
     protected WebDriver driver;
+    private WebDriverWait wait;
 
     @BeforeMethod
     public void setUp() {
         driver = DriverManager.getDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+        
         driver.get("https://xaltsocnportal.web.app/signin");
         
-        new WebDriverWait(driver, Duration.ofSeconds(20))
-            .until(webDriver -> ((JavascriptExecutor) webDriver)
-            .executeScript("return document.readyState").equals("complete"));
+        wait.until(webDriver -> 
+            ((JavascriptExecutor) webDriver).executeScript("return document.readyState")
+            .equals("complete"));
     }
 
     @AfterMethod
     public void tearDown() {
-        DriverManager.quitDriver();
+        if (driver != null) {
+            DriverManager.quitDriver();
+        }
     }
 }
